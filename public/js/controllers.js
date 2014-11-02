@@ -17,8 +17,8 @@ angular.module('myApp.controllers', [])
         }
   }])
     .controller('AdminLoginCtrl',
-    ['$scope', '$location', '$cookies', 'AuthService', '$log',
-    function($scope, $location, $cookies, AuthService, $log) {
+    ['$scope', '$location', '$cookies', 'AuthService', 'flashMessageService', '$log',
+    function($scope, $location, $cookies, AuthService, flashMessageService, $log) {
         $scope.credentials = {
             username: '',
             password: ''
@@ -31,6 +31,7 @@ angular.module('myApp.controllers', [])
                     $location.path('/admin/pages');
                 },
                 function(err) {
+                    flashMessageService.setMessage(err.data);
                     $log.log(err);
                 }
             )
