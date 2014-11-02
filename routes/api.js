@@ -42,6 +42,20 @@ router.post('/pages/add', sessionCheck, function(req, res) {
     });
 });
 
+// fetch page contents
+router.get('pages/details/:url', function(req, res) {
+    var url = req.params.url;
+
+    Page.findOne({
+        url: url
+    }, function(err, page) {
+        if (err) {
+            return console.error(err);
+        }
+        return res.send(page);
+    });
+});
+
 // update data
 router.post('/pages/update', sessionCheck, function(req, res) {
     var id = req.body._id;
@@ -90,24 +104,10 @@ router.get('/pages/admin-details/:id', sessionCheck, function(req, res) {
     });
 });
 
-// fetch page contents
-router.get('pages/details/:url', function(req, res) {
-    var url = req.params.url;
-
-    Page.findOne({
-        url: url
-    }, function(err, page) {
-        if (err) {
-            return console.error(err);
-        }
-        return res.send(page);
-    });
-});
-
 // add admin user
-router.post('/add-user', function(req, res) {
+router.post('/admin/add-user', function(req, res) {
     var salt, hash, password;
-    password = request.body.password;
+    password = req.body.password;
     salt = bcrypt.genSaltSync(10);
     hash = bcrypt.hashSync(password, salt);
 
