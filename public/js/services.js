@@ -28,6 +28,10 @@ angular.module('myApp.services', [])
           return $http.delete('/api/pages/delete/' + id);
         },
 
+        getAdminPageContent: function(id) {
+          return $http.get('/api/pages/admin-details/'+id);
+        },
+
         getPageContent: function(url) {
           return $http.get('/api/pages/details/' + url);
         }
