@@ -5,14 +5,23 @@
     <title > Angular CMS </title >
     <base href="/">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel=" stylesheet" href ="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href ="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="css/app.css" />
 </head>
 
-<body>
-
-<div message-flash></div>
-<div class="container" ng-view ></div>
+<body ng-controller="AppCtrl">
+<div admin-login class="col-md-3 pull-right"></div>
+<div class="container">
+    <header>
+        <img ng-src="{{site.logo}}">
+    </header>
+    <div message-flash></div>
+    <div class="row">
+        <div class="col-md-3" nav-bar></div>
+        <div class="col-md-6" ng-view ></div>
+    </div>
+    <footer>{{site.footer}}</footer>
+</div>
 
 <script src="bower_components/tinymce/tinymce.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>

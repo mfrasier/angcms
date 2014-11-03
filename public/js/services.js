@@ -46,4 +46,20 @@ angular.module('myApp.services', [])
           return $http.get('/api/logout');
         }
       }
+    }])
+    .factory('myHttpInterceptor', ['$q', '$location', '$log',
+    function($q, $location, $log) {
+      return {
+        response: function(response) {
+          return response;
+        },
+        responseError: function(response) {
+          if (response.status === 401) {
+            $log.log('server invalidated session');
+            $location.path('/admin/login');
+            return $q.reject(response);
+          }
+          return $q.reject(response);
+        }
+      }
     }]);

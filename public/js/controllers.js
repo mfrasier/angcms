@@ -45,7 +45,11 @@ angular.module('myApp.controllers', [])
             $scope.pageContent._id = $routeParams.id;
             $scope.heading = "Add a New Page";
 
+            $log.log('in AddEditPageCtrl, id='+$scope.pageContent._id);
+            return;
+
             $scope.updateURL = function() {
+                $log.log('in updateURL');
                 $scope.pageContent.url = $filter('formatURL')($scope.pageContent.title);
             };
 
@@ -74,4 +78,34 @@ angular.module('myApp.controllers', [])
                     )
                 }
             }
-        }]);
+        }])
+    .controller('AppCtrl', ['$scope', 'AuthService','flashMessageService', '$location', '$log',
+        function($scope, AuthService, flashMessageService, $location, $log) {
+            $scope.site = {
+                logo: 'img/angcms-logo.png',
+                footer: 'Copyright 2104 Angular CMS'
+            };
+
+            $scope.logout = function() {
+                AuthService.logout().then(
+                    function() {
+                        $location.path('/admin/login');
+                        flashMessageService.setMessage('Successfully logged out');
+                    }, function(err) {
+                        $log.log('there was an error logging out');
+                    }
+                )
+            }
+        }])
+    .controller('PageCtrl', ['$scope', 'pagesFactory', '$routeParams', '$log',
+    function($scope, pagesFactory, $routeParams, $log) {
+        var url = $routeParams.url;
+
+        pagesFactory.getPageContent(url).then(
+            function(response) {
+                $scope.pageContent = response.data;
+            }, function(err) {
+                $log.log(err);
+            }
+        )
+    }]);
