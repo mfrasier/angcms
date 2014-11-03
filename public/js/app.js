@@ -9,7 +9,8 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
     'ngCookies',
-    'message-flash'
+    'message-flash',
+    'ui.tinymce'
 ]).
     config(['$routeProvider', '$locationProvider',
       function($routeProvider, $locationProvider) {
